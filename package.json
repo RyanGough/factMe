@@ -12,5 +12,8 @@
     "trivia"
   ],
   "author": "ryan w gough",
-  "license": "BSD"
+  "license": "BSD",
+  "dependencies": {
+    "jscrape": "0.0.4"
+  }
 }
