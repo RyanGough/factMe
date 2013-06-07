@@ -14,6 +14,7 @@
   "author": "ryan w gough",
   "license": "BSD",
   "dependencies": {
-    "jscrape": "0.0.4"
+    "jscrape": "0.0.4",
+    "wikifetch": "0.0.1"
   }
 }
