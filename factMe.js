@@ -1,11 +1,12 @@
-var jscrape = require('jscrape');
+var request = require('request');
+var cheerio = require('cheerio');
 
-var wikiPageURL = 'http://en.wikipedia.org/wiki/' + process.argv[2];
+var wikiPageUrl = 'http://en.wikipedia.org/wiki/' + process.argv[2];
 
-jscrape ( wikiPageURL, function ( error, $, response, body ) {
-	if ( !error && $ ) {
-		var bodyContent = $('#bodyContent').text();
-		var paras = $('#bodyContent p').each(function(index){
+request(wikiPageUrl, function (error, response, body) {
+	if (!error && response.statusCode == 200) {
+		$ = cheerio.load(body);
+		var articleText = $('#bodyContent p').each(function(){
 			var para = $(this).text();
 			var sentances = para.split('.');
 			sentances.forEach(function(sentance){
@@ -15,6 +16,6 @@ jscrape ( wikiPageURL, function ( error, $, response, body ) {
 			});
 		});
 	} else {
-		console.log("failed to get url");
+		console.log("failed to load page");
 	}
-})
+});
