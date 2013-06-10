@@ -1,7 +1,8 @@
 var request = require('request');
 var cheerio = require('cheerio');
 
-var wikiPageUrl = 'http://en.wikipedia.org/wiki/' + process.argv[2];
+var answer = process.argv[2];
+var wikiPageUrl = 'http://en.wikipedia.org/wiki/' + answer;
 
 request(wikiPageUrl, function (error, response, body) {
 	if (!error && response.statusCode == 200) {
@@ -10,8 +11,14 @@ request(wikiPageUrl, function (error, response, body) {
 			var para = $(this).text();
 			var sentances = para.split('.');
 			sentances.forEach(function(sentance){
+				sentance = sentance.trim();
 				if (sentance.length) {
-					console.log(sentance.trim() + ".");
+					var fact = new RegExp("^" + answer);
+					if (fact.test(sentance)) {
+						var footnote = new RegExp("\[[0-9]*\]");
+						sentance = sentance.replace(footnote, "", 'g');
+						console.log(sentance.trim() + ".");
+					}
 				}
 			});
 		});
