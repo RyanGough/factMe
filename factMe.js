@@ -15,8 +15,8 @@ request(wikiPageUrl, function (error, response, body) {
 				if (sentance.length) {
 					var fact = new RegExp("^" + answer);
 					if (fact.test(sentance)) {
-						var footnote = new RegExp("\[[0-9]*\]");
-						sentance = sentance.replace(footnote, "", 'g');
+						var footnote = /\[[0-9]*\]/g
+						sentance = sentance.replace(footnote, "");
 						console.log(sentance.trim() + ".");
 					}
 				}
